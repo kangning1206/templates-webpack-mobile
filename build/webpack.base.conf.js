@@ -1,7 +1,6 @@
 var path = require('path')
 var utils = require('./utils')
 var config = require('../config')
-var vueLoaderConfig = require('./vue-loader.conf')
 
 function resolve(dir) {
   return path.join(__dirname, '..', dir)
@@ -23,17 +22,17 @@ module.exports = {
   },
   module: {
     rules: [
-      // {   test: /\.(js|jsx)$/,   loader: 'eslint-loader',   enforce: 'pre',
-      // include: [     resolve('src'), resolve('test')   ],   options: {
-      // formatter: require('eslint-friendly-formatter')   } },
       {
         test: /\.(js|jsx)$/,
-        loader: 'babel-loader',
-        include: [
-          resolve('src'), resolve('test')
-        ],
-        query: {
-          presets: ['babel-preset-react', 'babel-preset-es2015']
+        include: /(src|test)/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              'babel-preset-react', 'babel-preset-es2015'
+            ],
+            plugins: ['transform-class-properties']
+          }
         }
       }, {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
