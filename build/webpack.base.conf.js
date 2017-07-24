@@ -1,7 +1,7 @@
 var path = require('path')
 var utils = require('./utils')
 var config = require('../config')
-
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
 function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
@@ -20,6 +20,7 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx', '.json']
   },
+  plugins: [new ExtractTextPlugin('[name].css')],
   module: {
     rules: [
       {
@@ -34,6 +35,17 @@ module.exports = {
             plugins: ['transform-class-properties']
           }
         }
+      }, 
+      // {
+      //   test: /\.styl$/,
+      //   use: ['css-loader', 'stylus-loader']
+      // },
+       {
+        test: /\.styl$/,
+        //include: [resolve('src')],
+        use: ExtractTextPlugin.extract({
+          use: ['css-loader', 'stylus-loader']
+        })
       }, {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',

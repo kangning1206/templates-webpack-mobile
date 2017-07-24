@@ -7,6 +7,8 @@ import { browserHistory } from 'react-router'
 import Explore from '../components/Explore'
 import { resetErrorMessage } from '../actions'
 
+import '../css/app.styl';
+
 class App extends Component {
   static propTypes = {
     // Injected by React Redux
