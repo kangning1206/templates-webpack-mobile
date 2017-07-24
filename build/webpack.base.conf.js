@@ -6,6 +6,8 @@ function resolve(dir) {
   return path.join(__dirname, '..', dir)
 }
 
+const extractStylus = new ExtractTextPlugin({filename: "[name].css"});
+
 module.exports = {
   entry: {
     app: './src/index.js'
@@ -20,7 +22,7 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx', '.json']
   },
-  plugins: [new ExtractTextPlugin('[name].css')],
+  plugins: [extractStylus],
   module: {
     rules: [
       {
@@ -35,15 +37,12 @@ module.exports = {
             plugins: ['transform-class-properties']
           }
         }
-      }, 
-      // {
-      //   test: /\.styl$/,
-      //   use: ['css-loader', 'stylus-loader']
-      // },
-       {
+      },
+      // {   test: /\.styl$/,   use: ['css-loader', 'stylus-loader'] },
+      {
         test: /\.styl$/,
-        //include: [resolve('src')],
-        use: ExtractTextPlugin.extract({
+        include: /(src)/,
+        use: extractStylus.extract({
           use: ['css-loader', 'stylus-loader']
         })
       }, {
