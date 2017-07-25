@@ -1,11 +1,11 @@
 /* eslint-disable no-undef */
 
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { browserHistory } from 'react-router'
-import Explore from '../components/Explore'
-import { resetErrorMessage } from '../actions'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
+import Explore from '../components/Explore';
+import { resetErrorMessage } from '../actions';
 
 import '../css/app.styl';
 
@@ -19,19 +19,19 @@ class App extends Component {
     children: PropTypes.node
   }
 
-  handleDismissClick = e => {
-    this.props.resetErrorMessage()
-    e.preventDefault()
+  handleDismissClick = (e) => {
+    this.props.resetErrorMessage();
+    e.preventDefault();
   }
 
-  handleChange = nextValue => {
-    browserHistory.push(`/${nextValue}`)
+  handleChange = (nextValue) => {
+    browserHistory.push(`/${nextValue}`);
   }
 
   renderErrorMessage() {
-    const { errorMessage } = this.props
+    const { errorMessage } = this.props;
     if (!errorMessage) {
-      return null
+      return null;
     }
 
     return (
@@ -42,28 +42,30 @@ class App extends Component {
           Dismiss
         </button>
       </p>
-    )
+    );
   }
 
   render() {
-    const { children, inputValue } = this.props
+    const { children, inputValue } = this.props;
     return (
       <div>
-        <Explore value={inputValue}
-                 onChange={this.handleChange} />
+        <Explore
+          value={inputValue}
+          onChange={this.handleChange}
+        />
         <hr />
         {this.renderErrorMessage()}
         {children}
       </div>
-    )
+    );
   }
 }
 
 const mapStateToProps = (state, ownProps) => ({
   errorMessage: state.errorMessage,
   inputValue: ownProps.location.pathname.substring(1)
-})
+});
 
 export default connect(mapStateToProps, {
   resetErrorMessage
-})(App)
+})(App);

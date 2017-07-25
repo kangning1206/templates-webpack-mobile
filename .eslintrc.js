@@ -9,11 +9,14 @@ module.exports = {
   env: {
     browser: true,
   },
-  extends: 'airbnb-base',
+  extends: 'eslint-config-ali/react',
+  globals:{
+
+  },
   // required to lint *.vue files
-  plugins: [
-    'html'
-  ],
+  // plugins: [
+  //   'html'
+  // ],
   // check if imports actually resolve
   'settings': {
     'import/resolver': {
@@ -24,10 +27,10 @@ module.exports = {
   },
   // add your custom rules here
   'rules': {
+    'no-prototype-builtins':0,
     // don't require .vue extension when importing
     'import/extensions': ['error', 'always', {
-      'js': 'never',
-      'vue': 'never'
+      'js': 'never'
     }],
     // allow optionalDependencies
     'import/no-extraneous-dependencies': ['error', {

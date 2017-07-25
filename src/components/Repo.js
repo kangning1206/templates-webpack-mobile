@@ -1,10 +1,10 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Link } from 'react-router'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router';
 
 const Repo = ({ repo, owner }) => {
-  const { login } = owner
-  const { name, description } = repo
+  const { login } = owner;
+  const { name, description } = repo;
 
   return (
     <div className="Repo">
@@ -21,8 +21,8 @@ const Repo = ({ repo, owner }) => {
         <p>{description}</p>
       }
     </div>
-  )
-}
+  );
+};
 
 Repo.propTypes = {
   repo: PropTypes.shape({
@@ -32,6 +32,6 @@ Repo.propTypes = {
   owner: PropTypes.shape({
     login: PropTypes.string.isRequired
   }).isRequired
-}
+};
 
-export default Repo
+export default Repo;

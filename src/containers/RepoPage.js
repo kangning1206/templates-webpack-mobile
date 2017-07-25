@@ -1,18 +1,18 @@
 /* eslint-disable no-undef */
 
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { loadRepo, loadStargazers } from '../actions'
-import Repo from '../components/Repo'
-import User from '../components/User'
-import List from '../components/List'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { loadRepo, loadStargazers } from '../actions';
+import Repo from '../components/Repo';
+import User from '../components/User';
+import List from '../components/List';
 
-const loadData = props => {
-  const { fullName } = props
-  props.loadRepo(fullName, [ 'description' ])
-  props.loadStargazers(fullName)
-}
+const loadData = (props) => {
+  const { fullName } = props;
+  props.loadRepo(fullName, ['description']);
+  props.loadStargazers(fullName);
+};
 
 class RepoPage extends Component {
   static propTypes = {
@@ -27,59 +27,63 @@ class RepoPage extends Component {
   }
 
   componentWillMount() {
-    loadData(this.props)
+    loadData(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.fullName !== this.props.fullName) {
-      loadData(nextProps)
+      loadData(nextProps);
     }
   }
 
   handleLoadMoreClick = () => {
-    this.props.loadStargazers(this.props.fullName, true)
+    this.props.loadStargazers(this.props.fullName, true);
   }
 
   renderUser(user) {
-    return <User user={user} key={user.login} />
+    return <User user={user} key={user.login} />;
   }
 
   render() {
-    const { repo, owner, name } = this.props
+    const { repo, owner, name } = this.props;
     if (!repo || !owner) {
-      return <h1><i>Loading {name} details...</i></h1>
+      return <h1><i>Loading {name} details...</i></h1>;
     }
 
-    const { stargazers, stargazersPagination } = this.props
+    const { stargazers, stargazersPagination } = this.props;
     return (
       <div>
-        <Repo repo={repo}
-              owner={owner} />
+        <Repo
+          repo={repo}
+          owner={owner}
+        />
         <hr />
-        <List renderItem={this.renderUser}
-              items={stargazers}
-              onLoadMoreClick={this.handleLoadMoreClick}
-              loadingLabel={`Loading stargazers of ${name}...`}
-              {...stargazersPagination} />
+        <List
+          renderItem={this.renderUser}
+          items={stargazers}
+          onLoadMoreClick={this.handleLoadMoreClick}
+          loadingLabel={`Loading stargazers of ${name}...`}
+          {...stargazersPagination}
+        />
       </div>
-    )
+    );
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
   // We need to lower case the login/name due to the way GitHub's API behaves.
   // Have a look at ../middleware/api.js for more details.
-  const login = ownProps.params.login.toLowerCase()
-  const name = ownProps.params.name.toLowerCase()
+  const login = ownProps.params.login.toLowerCase();
+  const name = ownProps.params.name.toLowerCase();
 
   const {
     pagination: { stargazersByRepo },
     entities: { users, repos }
-  } = state
+  } = state;
 
-  const fullName = `${login}/${name}`
-  const stargazersPagination = stargazersByRepo[fullName] || { ids: [] }
-  const stargazers = stargazersPagination.ids.map(id => users[id])
+  const fullName = `${login}/${name}`;
+  const stargazersPagination = stargazersByRepo[fullName] || { ids: [] };
+  const stargazers = stargazersPagination.ids.map(id => users[id]);
 
   return {
     fullName,
@@ -88,10 +92,10 @@ const mapStateToProps = (state, ownProps) => {
     stargazersPagination,
     repo: repos[fullName],
     owner: users[login]
-  }
-}
+  };
+};
 
 export default connect(mapStateToProps, {
   loadRepo,
   loadStargazers
-})(RepoPage)
+})(RepoPage);
