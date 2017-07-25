@@ -28,6 +28,8 @@ module.exports = {
   // add your custom rules here
   'rules': {
     'no-prototype-builtins':0,
+    'react/forbid-prop-types': 0,
+    'react/jsx-filename-extension': ['error', { 'extensions': ['.js', '.jsx'] }],
     // don't require .vue extension when importing
     'import/extensions': ['error', 'always', {
       'js': 'never'

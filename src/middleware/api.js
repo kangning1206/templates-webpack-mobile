@@ -1,4 +1,4 @@
-import { normalize, schema } from 'normalizr';
+import { normalize, schema as Schema } from 'normalizr';
 import { camelizeKeys } from 'humps';
 
 // Extracts the next page URL from Github API response.
@@ -54,11 +54,11 @@ const callApi = (endpoint, schema) => {
 // leading to a frozen UI as it wouldn't find "someuser" in the entities.
 // That's why we're forcing lower cases down there.
 
-const userSchema = new schema.Entity('users', {}, {
+const userSchema = new Schema.Entity('users', {}, {
   idAttribute: user => user.login.toLowerCase()
 });
 
-const repoSchema = new schema.Entity('repos', {
+const repoSchema = new Schema.Entity('repos', {
   owner: userSchema
 }, {
   idAttribute: repo => repo.fullName.toLowerCase()
